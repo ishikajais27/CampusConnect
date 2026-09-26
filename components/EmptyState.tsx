@@ -10,35 +10,24 @@ export default function EmptyState({
   action?: ReactNode
 }) {
   return (
-    <div
-      className="card-surface"
-      style={{
-        padding: '48px 32px',
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 12,
-      }}
-    >
-      <svg
-        width="34"
-        height="34"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"
-          stroke="var(--ink-soft)"
-          strokeWidth="1.4"
-        />
-        <path d="M15 4v5h5" stroke="var(--ink-soft)" strokeWidth="1.4" />
-        <path d="M8 13h8M8 17h5" stroke="var(--ink-soft)" strokeWidth="1.4" />
-      </svg>
-      <h3 style={{ fontSize: 18 }}>{title}</h3>
-      <p style={{ maxWidth: 360 }}>{description}</p>
-      {action}
+    <div className="w-full max-w-xl mx-auto py-space-xl text-center space-y-space-md">
+      <div className="w-20 h-20 mx-auto rounded-full bg-surface-container-high flex items-center justify-center text-primary shadow-sm">
+        <span className="material-symbols-outlined text-[36px]">history_edu</span>
+      </div>
+      <div className="space-y-space-xs">
+        <p className="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
+          ✦ NO MATCHING GATHERINGS FOUND ✦
+        </p>
+        <h3 className="font-headline-md text-headline-md text-on-surface">{title}</h3>
+        <p className="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto leading-relaxed">
+          {description}
+        </p>
+      </div>
+      {action && (
+        <div className="pt-space-sm flex items-center justify-center gap-space-md">
+          {action}
+        </div>
+      )}
     </div>
   )
 }

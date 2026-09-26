@@ -7,28 +7,17 @@ const COPY: Record<Status, string> = {
   cancelled: 'Cancelled',
 }
 
-const COLORS: Record<Status, { bg: string; fg: string }> = {
-  open: { bg: 'var(--green-bg)', fg: 'var(--green)' },
-  full: { bg: 'var(--rust-bg)', fg: 'var(--rust)' },
-  past: { bg: 'var(--slate-bg)', fg: 'var(--ink-soft)' },
-  cancelled: { bg: 'var(--rust-bg)', fg: 'var(--rust)' },
+const CLASSES: Record<Status, string> = {
+  open: 'bg-secondary-container text-primary',
+  full: 'bg-error-container text-error',
+  past: 'bg-surface-variant text-on-surface-variant',
+  cancelled: 'bg-error-container text-error',
 }
 
 export default function StatusBadge({ status }: { status: Status }) {
-  const { bg, fg } = COLORS[status]
   return (
     <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        fontFamily: 'var(--font-mono)',
-        fontSize: '12px',
-        padding: '3px 8px',
-        borderRadius: '999px',
-        background: bg,
-        color: fg,
-        whiteSpace: 'nowrap',
-      }}
+      className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-label-md font-label-md ${CLASSES[status]}`}
     >
       {COPY[status]}
     </span>

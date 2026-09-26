@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Newsreader:wght@100..900&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"tertiary":"#625b4f","on-secondary":"#ffffff","primary":"#9d3d26","on-error":"#ffffff","outline":"#8a726c","tertiary-fixed":"#ece1d1","on-tertiary":"#ffffff","secondary":"#4f644b","background":"#fff8f4","secondary-container":"#cfe6c7","on-primary":"#ffffff","on-surface":"#1e1b18","primary-fixed-dim":"#ffb4a2","on-primary-fixed":"#3c0700","surface":"#fff8f4","surface-container-low":"#faf2ed","on-primary-container":"#fffbff","surface-dim":"#e0d9d4","on-error-container":"#93000a","on-secondary-container":"#54684f","on-tertiary-fixed":"#201b11","tertiary-container":"#7b7467","on-secondary-fixed-variant":"#384c35","on-surface-variant":"#56423d","error":"#ba1a1a","secondary-fixed-dim":"#b6cdaf","primary-container":"#bd553b","on-primary-fixed-variant":"#802913","inverse-primary":"#ffb4a2","surface-bright":"#fff8f4","on-tertiary-fixed-variant":"#4c463a","error-container":"#ffdad6","inverse-on-surface":"#f7efea","surface-container-highest":"#e8e1dc","on-tertiary-container":"#fffbff","surface-container-lowest":"#ffffff","on-background":"#1e1b18","secondary-fixed":"#d2e9ca","surface-container":"#f4ece7","on-secondary-fixed":"#0e200c","surface-container-high":"#eee7e2","inverse-surface":"#33302d","primary-fixed":"#ffdad2","surface-tint":"#a04028","outline-variant":"#ddc0ba","tertiary-fixed-dim":"#cfc5b6","surface-variant":"#e8e1dc"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-md":"1rem","margin":"3rem","margin-mobile":"1.25rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-sm":"0.5rem","gutter":"1.5rem","space-lg":"1.5rem","space-xl":"2.5rem"},"fontFamily":{"headline-md":["Newsreader"],"body-lg":["Newsreader"],"label-md":["Inter"],"display":["Newsreader"],"headline-lg":["Newsreader"],"label-caps":["Inter"],"title-md":["Inter"],"caption":["Inter"],"display-mobile":["Newsreader"],"headline-lg-mobile":["Newsreader"],"body-md":["Inter"],"headline-sm":["Newsreader"],"body-sm":["Inter"]},"fontSize":{"headline-md":["2rem",{"lineHeight":"2.5rem","letterSpacing":"-0.01em","fontWeight":"400"}],"body-lg":["1.25rem",{"lineHeight":"1.875rem","letterSpacing":"0","fontWeight":"400"}],"label-md":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"500"}],"display":["3.5rem",{"lineHeight":"4rem","letterSpacing":"-0.02em","fontWeight":"400"}],"headline-lg":["2.5rem",{"lineHeight":"3rem","letterSpacing":"-0.015em","fontWeight":"400"}],"label-caps":["0.6875rem",{"lineHeight":"1rem","letterSpacing":"0.08em","fontWeight":"700"}],"title-md":["1.125rem",{"lineHeight":"1.625rem","letterSpacing":"-0.005em","fontWeight":"600"}],"caption":["0.75rem",{"lineHeight":"1.125rem","letterSpacing":"0.01em","fontWeight":"400"}],"display-mobile":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.015em","fontWeight":"400"}],"headline-lg-mobile":["1.875rem",{"lineHeight":"2.375rem","letterSpacing":"-0.01em","fontWeight":"400"}],"body-md":["1rem",{"lineHeight":"1.625rem","letterSpacing":"0","fontWeight":"400"}],"headline-sm":["1.5rem",{"lineHeight":"2rem","letterSpacing":"0","fontWeight":"500"}],"body-sm":["0.875rem",{"lineHeight":"1.375rem","letterSpacing":"0","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1320px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-xl"><a class="flex items-center gap-space-xs group" data-path="events" href="#"><span class="material-symbols-outlined text-primary text-[22px] transition-transform duration-200 group-hover:rotate-45">emergency</span><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface">Campus Connect</span></a><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary font-title-md text-title-md border-b-2 border-primary pb-0.5"><a aria-current="page" class="transition-colors text-primary font-title-md text-title-md border-b-2 border-primary pb-0.5" data-path="events" href="#">Events</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="my-registrations" href="#">My Registrations</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="curated-series" href="#">Collegiate Series</a></nav></div><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center px-space-md py-space-xs rounded-full bg-secondary text-on-secondary font-label-md text-label-md hover:bg-secondary/90 transition-colors shadow-[0_1px_2px_rgba(35,32,29,0.03)]" data-path="organizer-portal" href="#">Organizer Portal</a><div class="relative inline-flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg shadow-[0_1px_2px_rgba(35,32,29,0.03)]"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mr-space-xs pl-space-xs">Role</span><select aria-label="Role Switcher" class="appearance-none bg-transparent font-label-md text-label-md text-on-surface pr-space-lg pl-space-xs py-space-xs focus:outline-none cursor-pointer"><option value="student">Student</option><option value="organizer">Organizer</option><option value="faculty">Faculty Fellow</option></select><span class="material-symbols-outlined text-on-surface-variant text-[16px] pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">arrow_drop_down</span></div><button aria-label="Notifications" class="relative p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-220px)]"><div class="flex flex-col w-full">
+<!-- Page Header & Collegiate Breadcrumb / Gazette Metadata -->
+<section class="w-full bg-surface-container-low/60 pb-space-lg">
+<div class="max-w-[1320px] mx-auto px-margin-mobile lg:px-margin pt-space-lg">
+<!-- Top Micro-bar: Archival stamp & date -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-md text-on-surface-variant font-label-caps text-label-caps uppercase tracking-widest">
+<div class="flex items-center gap-space-sm">
+<span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+<span>MICHAELMAS TERM 2025 • VOL. LXXIV</span>
+<span class="text-tertiary">/</span>
+<span class="text-tertiary">ISSUE 08</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="inline-flex items-center gap-1 font-caption text-caption lowercase text-on-surface-variant/80">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span>
+            curated campus chronicle
+          </span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-tertiary">CIRCULATION 4,200</span>
+</div>
+</div>
+<!-- Main Editorial Title Block -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg pb-space-lg">
+<div class="max-w-3xl space-y-space-xs">
+<p class="font-label-caps text-label-caps text-primary uppercase tracking-[0.14em] font-semibold">
+            DISPATCH &amp; GATHERINGS
+          </p>
+<h1 class="font-display text-display text-on-surface tracking-tight leading-[1.08]">
+            Campus Discoveries &amp; Assemblages
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant pt-space-xs max-w-2xl leading-relaxed">
+            Curated lectures, creative salons, research symposia, and athletic fixtures across collegiate societies and research foundations.
+          </p>
+</div>
+<!-- Metric Stamp Badge & Sorter Pill -->
+<div class="flex flex-row lg:flex-col items-start lg:items-end justify-between gap-space-sm shrink-0">
+<div class="inline-flex items-center gap-space-xs bg-surface-container px-space-md py-space-xs rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[18px]">event_available</span>
+<span class="font-title-md text-title-md text-on-surface" id="activeEventCount">6</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Events in Gazette</span>
+</div>
+<div class="relative inline-flex items-center bg-surface-container-lowest px-space-sm py-1 rounded-lg shadow-sm">
+<span class="font-label-caps text-label-caps text-tertiary uppercase pl-space-xs pr-1">Sort:</span>
+<select aria-label="Sort events" class="appearance-none bg-transparent font-label-md text-label-md text-on-surface pr-space-lg pl-1 py-1 focus:outline-none cursor-pointer" id="sortSelect">
+<option value="date-asc">Date (Earliest First)</option>
+<option value="date-desc">Date (Latest First)</option>
+<option value="seats">Available Capacity</option>
+<option value="title">Alphabetical (A-Z)</option>
+</select>
+<span class="material-symbols-outlined text-tertiary text-[18px] pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">unfold_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Filter Matrix & Controls -->
+<section class="w-full bg-surface py-space-md sticky top-20 z-30 backdrop-blur-md bg-surface/95 shadow-sm">
+<div class="max-w-[1320px] mx-auto px-margin-mobile lg:px-margin space-y-space-md">
+<!-- Upper Search Row -->
+<div class="flex flex-col md:flex-row items-stretch md:items-center gap-space-md">
+<!-- Search Field -->
+<div class="relative flex-1 group">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-tertiary text-[20px] group-focus-within:text-primary transition-colors">
+            search
+          </span>
+<input class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline font-label-md text-label-md pl-11 pr-24 py-2.5 rounded-lg shadow-sm focus:outline-none focus:bg-surface-container-lowest transition-all" id="searchInput" placeholder="Search by event title, society, hall, or speaker..." type="text"/>
+<div class="absolute right-space-sm top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
+<kbd class="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-label-caps text-label-caps">⌘K</kbd>
+<button aria-label="Clear Search" class="hidden text-tertiary hover:text-on-surface p-1" id="clearSearchBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<!-- Fast View Mode Toggle ( populated vs empty preview ) -->
+<div class="flex items-center gap-space-xs shrink-0 self-end md:self-auto">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high font-label-md text-label-md text-on-surface-variant transition-colors" id="toggleDemoEmptyBtn" title="Inspect collegiate empty state view" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">flaky</span>
+<span id="demoBtnLabel">Preview Empty State</span>
+</button>
+</div>
+</div>
+<!-- Categories & Sub-filters Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pt-space-xs">
+<!-- Category Filter Pills -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-none" id="categoryChipsContainer">
+<button class="category-chip active-chip shrink-0 px-space-md py-1.5 rounded-full font-label-md text-label-md transition-all duration-150 bg-primary text-on-primary shadow-sm" data-category="all" type="button">
+            All Assemblages
+          </button>
+<button class="category-chip shrink-0 px-space-md py-1.5 rounded-full font-label-md text-label-md transition-all duration-150 bg-surface-container-low text-on-surface hover:bg-surface-container" data-category="academic" type="button">
+            Academic &amp; Science
+          </button>
+<button class="category-chip shrink-0 px-space-md py-1.5 rounded-full font-label-md text-label-md transition-all duration-150 bg-surface-container-low text-on-surface hover:bg-surface-container" data-category="arts" type="button">
+            Arts &amp; Salons
+          </button>
+<button class="category-chip shrink-0 px-space-md py-1.5 rounded-full font-label-md text-label-md transition-all duration-150 bg-surface-container-low text-on-surface hover:bg-surface-container" data-category="career" type="button">
+            Career &amp; Guild
+          </button>
+<button class="category-chip shrink-0 px-space-md py-1.5 rounded-full font-label-md text-label-md transition-all duration-150 bg-surface-container-low text-on-surface hover:bg-surface-container" data-category="social" type="button">
+            Social Gatherings
+          </button>
+<button class="category-chip shrink-0 px-space-md py-1.5 rounded-full font-label-md text-label-md transition-all duration-150 bg-surface-container-low text-on-surface hover:bg-surface-container" data-category="athletics" type="button">
+            Athletics &amp; Fixtures
+          </button>
+</div>
+<!-- Secondary Controls: Available seats toggle & status legend -->
+<div class="flex flex-wrap items-center gap-space-lg text-on-surface-variant text-caption font-caption">
+<!-- Seats Checkbox Toggle -->
+<label class="inline-flex items-center gap-2 cursor-pointer select-none group">
+<input class="w-4 h-4 rounded-sm accent-primary text-primary focus:ring-0 cursor-pointer" id="seatsFilterCheckbox" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">
+              Only available seats
+            </span>
+</label>
+<!-- Status Legend -->
+<div class="hidden xl:flex items-center gap-space-md text-tertiary">
+<span class="font-label-caps text-label-caps uppercase text-tertiary">Key:</span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Open
+            </span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-600"></span> Full
+            </span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Past
+            </span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span> Cancelled
+            </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Card Grid & Main Listings -->
+<section class="w-full py-space-xl">
+<div class="max-w-[1320px] mx-auto px-margin-mobile lg:px-margin">
+<!-- Cards Container -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg items-stretch" id="eventsGrid">
+<!-- CARD 1: Academic - Open -->
+<article class="event-card group relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200" data-category="academic" data-date="2025-10-24T17:00" data-search="The Turing Colloquium Quantum Computing Foundations Oxford Cambridge Computing Guild Lovelace Hall Room 402" data-seats="18" data-status="open">
+<div class="space-y-space-md">
+<!-- Header: Category & Status Badge -->
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container-high px-2 py-0.5 rounded">
+                ACADEMIC &amp; SCIENCE
+              </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-secondary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Open</span>
+</span>
+</div>
+<!-- Archival Dashed Divider with Icon Accent -->
+<div class="relative py-1">
+<div class="w-full border-t border-dashed border-outline-variant/60"></div>
+<span class="absolute right-0 -top-2 bg-surface-container-lowest pl-1 font-caption text-caption text-tertiary">No. 104</span>
+</div>
+<!-- Title & Guild -->
+<div>
+<p class="font-caption text-caption text-secondary font-medium tracking-wide pb-0.5">
+                Oxford &amp; Cambridge Computing Guild
+              </p>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors leading-tight">
+                The Turing Colloquium: Quantum Computing Foundations
+              </h2>
+</div>
+<!-- Metadata cluster -->
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-body-sm pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+<span>Oct 24, 2025 • 5:00 PM GMT</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
+<span>Lovelace Hall, Room 402</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">chair</span>
+<span class="text-secondary font-medium">18 seats remaining</span>
+<span class="text-tertiary text-caption">(of 60 total)</span>
+</div>
+</div>
+<!-- Visual Progress Bar for Capacity -->
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 70%;"></div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="pt-space-lg flex items-center justify-between gap-space-sm mt-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Lecture Track A</span>
+<button class="inline-flex items-center gap-1 px-space-md py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-all shadow-sm group-hover:translate-x-0.5" onclick="showToast('Registration dossier opened for The Turing Colloquium.')" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- CARD 2: Arts - At Capacity / Full -->
+<article class="event-card group relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200" data-category="arts" data-date="2025-10-26T19:30" data-search="Autumn Chamber Quartet Bach Shostakovich Candlelight Philharmonia Society St. Jude Chapel Nave" data-seats="0" data-status="full">
+<div class="space-y-space-md">
+<!-- Header: Category & Status Badge -->
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container-high px-2 py-0.5 rounded">
+                ARTS &amp; SALONS
+              </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+<span>At Capacity</span>
+</span>
+</div>
+<!-- Archival Dashed Divider -->
+<div class="relative py-1">
+<div class="w-full border-t border-dashed border-outline-variant/60"></div>
+<span class="absolute right-0 -top-2 bg-surface-container-lowest pl-1 font-caption text-caption text-tertiary">Recital</span>
+</div>
+<!-- Title & Society -->
+<div>
+<p class="font-caption text-caption text-tertiary font-medium tracking-wide pb-0.5">
+                Philharmonia Society • Michaelmas Series
+              </p>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors leading-tight">
+                Autumn Chamber Quartet: Bach &amp; Shostakovich by Candlelight
+              </h2>
+</div>
+<!-- Metadata cluster -->
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-body-sm pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+<span>Oct 26, 2025 • 7:30 PM GMT</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
+<span>St. Jude's Chapel Nave</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-amber-700 shrink-0">hourglass_top</span>
+<span class="text-amber-800 font-medium">0 seats remaining</span>
+<span class="text-tertiary text-caption">(Waitlist active: 12 queued)</span>
+</div>
+</div>
+<!-- Full Capacity Bar -->
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-amber-600 h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Card Footer Action with Waitlist Tooltip -->
+<div class="pt-space-lg flex items-center justify-between gap-space-sm mt-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Acoustic Salon</span>
+<div class="relative group/btn">
+<button class="inline-flex items-center gap-1 px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-sm" onclick="showToast('You have been added to the Chamber Quartet waitlist (#13).')" type="button">
+<span class="material-symbols-outlined text-[16px] text-amber-700">playlist_add</span>
+<span>Join Waitlist</span>
+</button>
+<!-- Hover Tooltip -->
+<div class="absolute bottom-full right-0 mb-2 hidden group-hover/btn:block w-48 bg-inverse-surface text-inverse-on-surface text-caption font-caption p-2 rounded-md shadow-lg z-20 pointer-events-none">
+                Primary allocation full. Admissions granted upon seat cancellations.
+              </div>
+</div>
+</div>
+</article>
+<!-- CARD 3: Career - Open -->
+<article class="event-card group relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200" data-category="career" data-date="2025-10-29T18:00" data-search="Bioethics Biotech Founders Roundtable Life Sciences Innovation Forum Franklin Pavilion" data-seats="42" data-status="open">
+<div class="space-y-space-md">
+<!-- Header: Category & Status Badge -->
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container-high px-2 py-0.5 rounded">
+                CAREER &amp; GUILD
+              </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-secondary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Open</span>
+</span>
+</div>
+<!-- Archival Dashed Divider -->
+<div class="relative py-1">
+<div class="w-full border-t border-dashed border-outline-variant/60"></div>
+<span class="absolute right-0 -top-2 bg-surface-container-lowest pl-1 font-caption text-caption text-tertiary">Forum</span>
+</div>
+<!-- Title & Society -->
+<div>
+<p class="font-caption text-caption text-secondary font-medium tracking-wide pb-0.5">
+                Life Sciences Innovation Forum
+              </p>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors leading-tight">
+                Bioethics &amp; Biotech Founders Roundtable
+              </h2>
+</div>
+<!-- Metadata cluster -->
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-body-sm pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+<span>Oct 29, 2025 • 6:00 PM GMT</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
+<span>Franklin Pavilion • Room G-10</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">chair</span>
+<span class="text-secondary font-medium">42 seats remaining</span>
+<span class="text-tertiary text-caption">(of 100 total)</span>
+</div>
+</div>
+<!-- Visual Progress Bar for Capacity -->
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 58%;"></div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="pt-space-lg flex items-center justify-between gap-space-sm mt-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Networking &amp; Dinner</span>
+<button class="inline-flex items-center gap-1 px-space-md py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-all shadow-sm group-hover:translate-x-0.5" onclick="showToast('Registration dossier opened for Biotech Roundtable.')" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- CARD 4: Social - Cancelled -->
+<article class="event-card group relative bg-surface-container-low/70 opacity-80 rounded-xl p-space-lg flex flex-col justify-between shadow-sm transition-all duration-200" data-category="social" data-date="2025-11-02T16:00" data-search="Botanical Garden Harvest Cider Poetry Night Horticultural Union Old Conservatory Greenhouses" data-seats="0" data-status="cancelled">
+<div class="space-y-space-md">
+<!-- Header: Category & Status Badge -->
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container px-2 py-0.5 rounded">
+                SOCIAL
+              </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-error-container text-error font-label-md text-label-md font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span>Cancelled</span>
+</span>
+</div>
+<!-- Archival Dashed Divider -->
+<div class="relative py-1">
+<div class="w-full border-t border-dashed border-outline-variant/60"></div>
+<span class="absolute right-0 -top-2 bg-surface-container-low pl-1 font-caption text-caption text-tertiary">Notice</span>
+</div>
+<!-- Title & Society -->
+<div>
+<p class="font-caption text-caption text-tertiary font-medium tracking-wide pb-0.5">
+                The Horticultural Union
+              </p>
+<h2 class="font-headline-sm text-headline-sm text-on-surface/75 line-through decoration-tertiary/40 leading-tight">
+                Botanical Garden Harvest Cider &amp; Poetry Night
+              </h2>
+</div>
+<!-- Cancellation Banner Notice -->
+<div class="p-space-sm bg-error-container/40 rounded-lg flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">warning</span>
+<p class="font-caption text-caption text-error font-medium leading-relaxed">
+                Cancelled due to severe rain forecast. Rescheduling for Spring Equinox Term.
+              </p>
+</div>
+<!-- Metadata cluster -->
+<div class="space-y-space-xs text-on-surface-variant/70 font-body-sm text-body-sm pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+<span>Nov 02, 2025 • 4:00 PM GMT</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
+<span>Old Conservatory Greenhouses</span>
+</div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="pt-space-lg flex items-center justify-between gap-space-sm mt-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Postponed Dispatch</span>
+<button class="inline-flex items-center gap-1 px-space-md py-2 rounded-lg bg-surface-container text-tertiary font-label-md text-label-md cursor-not-allowed" disabled="" type="button">
+<span>Archived</span>
+</button>
+</div>
+</article>
+<!-- CARD 5: Academic - Past -->
+<article class="event-card group relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200" data-category="academic" data-date="2025-10-12T15:00" data-search="Nobel Laureate Keynote Genomic Architecture Epigenetics Department Biochemistry Great Hall of Anatomy" data-seats="0" data-status="past">
+<div class="space-y-space-md">
+<!-- Header: Category & Status Badge -->
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container-high px-2 py-0.5 rounded">
+                ACADEMIC &amp; SCIENCE
+              </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-tertiary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Past Assembly</span>
+</span>
+</div>
+<!-- Archival Dashed Divider -->
+<div class="relative py-1">
+<div class="w-full border-t border-dashed border-outline-variant/60"></div>
+<span class="absolute right-0 -top-2 bg-surface-container-lowest pl-1 font-caption text-caption text-tertiary">Record</span>
+</div>
+<!-- Title & Society -->
+<div>
+<p class="font-caption text-caption text-tertiary font-medium tracking-wide pb-0.5">
+                Department of Biochemistry
+              </p>
+<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight">
+                Nobel Laureate Keynote: Genomic Architecture &amp; Epigenetics
+              </h2>
+</div>
+<!-- Metadata cluster -->
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-body-sm pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+<span>Oct 12, 2025 • 3:00 PM GMT</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
+<span>Great Hall of Anatomy</span>
+</div>
+<div class="flex items-center gap-space-xs text-tertiary">
+<span class="material-symbols-outlined text-[18px] shrink-0">check_circle</span>
+<span>Event concluded • 140 Attendees recorded</span>
+</div>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded font-caption text-caption text-tertiary italic">
+              Audio transcription &amp; monograph deposited in library depository.
+            </div>
+</div>
+<!-- Card Footer Action -->
+<div class="pt-space-lg flex items-center justify-between gap-space-sm mt-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Symposium Archives</span>
+<button class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-primary-container transition-colors py-2" onclick="showToast('Loading digital manuscript and audio recording...')" type="button">
+<span class="material-symbols-outlined text-[18px]">library_books</span>
+<span class="underline underline-offset-4">Read Proceedings</span>
+</button>
+</div>
+</article>
+<!-- CARD 6: Athletics - Open -->
+<article class="event-card group relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200" data-category="athletics" data-date="2025-11-08T10:00" data-search="Head of the River Autumn Regatta Bankside Picnic Varsity Rowing Club Boathouse Reach River Embankment" data-seats="85" data-status="open">
+<div class="space-y-space-md">
+<!-- Header: Category & Status Badge -->
+<div class="flex items-center justify-between gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container-high px-2 py-0.5 rounded">
+                ATHLETICS
+              </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-secondary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Open</span>
+</span>
+</div>
+<!-- Archival Dashed Divider -->
+<div class="relative py-1">
+<div class="w-full border-t border-dashed border-outline-variant/60"></div>
+<span class="absolute right-0 -top-2 bg-surface-container-lowest pl-1 font-caption text-caption text-tertiary">Fixture</span>
+</div>
+<!-- Title & Society -->
+<div>
+<p class="font-caption text-caption text-secondary font-medium tracking-wide pb-0.5">
+                Varsity Rowing Club • Est. 1829
+              </p>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors leading-tight">
+                Head of the River Autumn Regatta &amp; Bankside Picnic
+              </h2>
+</div>
+<!-- Metadata cluster -->
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-body-sm pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+<span>Nov 08, 2025 • 10:00 AM GMT</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
+<span>Boathouse Reach, River Embankment</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">confirmation_number</span>
+<span class="text-secondary font-medium">85 spectator passes remaining</span>
+</div>
+</div>
+<!-- Visual Progress Bar for Capacity -->
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 45%;"></div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="pt-space-lg flex items-center justify-between gap-space-sm mt-auto">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Rivalry Fixture</span>
+<button class="inline-flex items-center gap-1 px-space-md py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-all shadow-sm group-hover:translate-x-0.5" onclick="showToast('Registration dossier opened for Head of the River Regatta.')" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Collegiate Empty State Preview (Shown when no matching records or toggled) -->
+<div class="hidden w-full max-w-xl mx-auto py-space-xl text-center space-y-space-md" id="emptyStateContainer">
+<div class="w-20 h-20 mx-auto rounded-full bg-surface-container-high flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[36px]">history_edu</span>
+</div>
+<div class="space-y-space-xs">
+<p class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
+            ✦ NO MATCHING GATHERINGS FOUND ✦
+          </p>
+<h3 class="font-headline-md text-headline-md text-on-surface">
+            The Archival Ledger is Silent
+          </h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto leading-relaxed">
+            No assemblies correspond with your current query. Try adjusting your search query, or clear your society filter to view the broader term itinerary.
+          </p>
+</div>
+<div class="pt-space-sm flex items-center justify-center gap-space-md">
+<button class="inline-flex items-center gap-space-xs px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-colors shadow-sm" id="resetFiltersBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">filter_alt_off</span>
+<span>Clear Filters &amp; Reset View</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive University Society Dispatch Bulletin / Callout Section -->
+<section class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-[1320px] mx-auto px-margin-mobile lg:px-margin">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg md:p-space-xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs text-secondary font-label-caps text-label-caps uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">campaign</span>
+<span>COLLEGIATE SOCIETY NOTICE</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">
+            Are You Convening an Academic Society Assembly?
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Registered guild officers and university fellows may petition for collegiate lecture halls, submit term gazette notifications, or coordinate guest speaker clearances through the unified registry.
+          </p>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-space-sm shrink-0 w-full sm:w-auto">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-space-lg py-2.5 rounded-lg bg-secondary hover:bg-secondary/90 text-on-secondary font-label-md text-label-md transition-colors shadow-sm" data-path="organizer-portal" href="#">
+<span>Lodge Assembly Request</span>
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</a>
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" onclick="showToast('Guild handbook monograph downloaded.')" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">menu_book</span>
+<span>Guidelines</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Lightweight Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 ease-out" id="toastNotification">
+<div class="bg-inverse-surface text-inverse-on-surface px-space-md py-3 rounded-lg shadow-xl flex items-center gap-space-sm font-label-md text-label-md max-w-md">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[20px]">notifications_active</span>
+<span id="toastMessage">Action completed successfully.</span>
+</div>
+</div>
+</div>
+<script>
+  (function initCampusConnectListing() {
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const categoryChips = document.querySelectorAll('.category-chip');
+    const seatsFilterCheckbox = document.getElementById('seatsFilterCheckbox');
+    const sortSelect = document.getElementById('sortSelect');
+    const eventsGrid = document.getElementById('eventsGrid');
+    const emptyStateContainer = document.getElementById('emptyStateContainer');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    const toggleDemoEmptyBtn = document.getElementById('toggleDemoEmptyBtn');
+    const demoBtnLabel = document.getElementById('demoBtnLabel');
+    const activeEventCount = document.getElementById('activeEventCount');
+    const toast = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+    let currentCategory = 'all';
+    let isForcedEmpty = false;
+    let toastTimeout = null;
+    // Toast helper
+    window.showToast = function(msg) {
+      if (!toast) return;
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastMessage.textContent = msg;
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3400);
+    };
+    // Card filtering logic
+    function applyFilters() {
+      if (isForcedEmpty) {
+        showEmptyState();
+        return;
+      }
+      const query = (searchInput.value || '').trim().toLowerCase();
+      const onlyAvailable = seatsFilterCheckbox.checked;
+      const cards = Array.from(eventsGrid.querySelectorAll('.event-card'));
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        const status = card.getAttribute('data-status');
+        const seats = parseInt(card.getAttribute('data-seats') || '0', 10);
+        const searchCorpus = (card.getAttribute('data-search') || '').toLowerCase();
+        // Check category
+        const matchesCategory = (currentCategory === 'all') || (category === currentCategory);
+        // Check seats available checkbox
+        const matchesSeats = !onlyAvailable || (status === 'open' && seats > 0);
+        // Check text search
+        const matchesSearch = !query || searchCorpus.includes(query);
+        if (matchesCategory && matchesSeats && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      // Update counter
+      activeEventCount.textContent = visibleCount;
+      if (visibleCount === 0) {
+        showEmptyState();
+      } else {
+        hideEmptyState();
+      }
+    }
+    function showEmptyState() {
+      eventsGrid.classList.add('hidden');
+      emptyStateContainer.classList.remove('hidden');
+      activeEventCount.textContent = '0';
+    }
+    function hideEmptyState() {
+      eventsGrid.classList.remove('hidden');
+      emptyStateContainer.classList.add('hidden');
+    }
+    // Sort Handler
+    function applySort() {
+      const mode = sortSelect.value;
+      const cards = Array.from(eventsGrid.querySelectorAll('.event-card'));
+      cards.sort((a, b) => {
+        if (mode === 'date-asc') {
+          return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
+        } else if (mode === 'date-desc') {
+          return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
+        } else if (mode === 'seats') {
+          return parseInt(b.getAttribute('data-seats') || '0', 10) - parseInt(a.getAttribute('data-seats') || '0', 10);
+        } else if (mode === 'title') {
+          const titleA = a.querySelector('h2').textContent.trim();
+          const titleB = b.querySelector('h2').textContent.trim();
+          return titleA.localeCompare(titleB);
+        }
+        return 0;
+      });
+      cards.forEach(card => eventsGrid.appendChild(card));
+    }
+    // Category button events
+    categoryChips.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryChips.forEach(b => {
+          b.classList.remove('active-chip', 'bg-primary', 'text-on-primary', 'shadow-sm');
+          b.classList.add('bg-surface-container-low', 'text-on-surface');
+        });
+        btn.classList.add('active-chip', 'bg-primary', 'text-on-primary', 'shadow-sm');
+        btn.classList.remove('bg-surface-container-low', 'text-on-surface');
+        currentCategory = btn.getAttribute('data-category');
+        isForcedEmpty = false;
+        demoBtnLabel.textContent = 'Preview Empty State';
+        applyFilters();
+      });
+    });
+    // Search events
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.length > 0) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+      }
+      isForcedEmpty = false;
+      demoBtnLabel.textContent = 'Preview Empty State';
+      applyFilters();
+    });
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+      searchInput.focus();
+      applyFilters();
+    });
+    // Checkbox toggle
+    seatsFilterCheckbox.addEventListener('change', () => {
+      isForcedEmpty = false;
+      demoBtnLabel.textContent = 'Preview Empty State';
+      applyFilters();
+    });
+    // Sort select change
+    sortSelect.addEventListener('change', applySort);
+    // Empty state preview toggle
+    toggleDemoEmptyBtn.addEventListener('click', () => {
+      isForcedEmpty = !isForcedEmpty;
+      if (isForcedEmpty) {
+        demoBtnLabel.textContent = 'Exit Empty State';
+        showEmptyState();
+      } else {
+        demoBtnLabel.textContent = 'Preview Empty State';
+        applyFilters();
+      }
+    });
+    // Reset button
+    resetFiltersBtn.addEventListener('click', () => {
+      isForcedEmpty = false;
+      searchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+      seatsFilterCheckbox.checked = false;
+      currentCategory = 'all';
+      categoryChips.forEach(b => {
+        b.classList.remove('active-chip', 'bg-primary', 'text-on-primary', 'shadow-sm');
+        b.classList.add('bg-surface-container-low', 'text-on-surface');
+      });
+      const allChip = document.querySelector('[data-category="all"]');
+      if (allChip) {
+        allChip.classList.add('active-chip', 'bg-primary', 'text-on-primary', 'shadow-sm');
+        allChip.classList.remove('bg-surface-container-low', 'text-on-surface');
+      }
+      demoBtnLabel.textContent = 'Preview Empty State';
+      applyFilters();
+      window.showToast('Filters cleared. Showing all 6 collegiate assemblies.');
+    });
+    // Keyboard shortcut Cmd/Ctrl + K to focus search
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+    // Initial pass
+    applySort();
+    applyFilters();
+  })();
+</script></main><footer class="w-full bg-surface-container-low py-space-xl shadow-[0_-1px_6px_rgba(0,0,0,0.02)]"><div class="max-w-[1320px] mx-auto px-margin-mobile lg:px-margin"><div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg pb-space-lg"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">emergency</span><span class="font-headline-sm text-headline-sm text-on-surface">Campus Connect</span><span class="font-caption text-caption text-on-surface-variant ml-space-sm italic">Collegiate Gazette &amp; Academic Assemblies</span></div><div class="flex flex-wrap items-center gap-space-lg"><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" data-path="society-guidelines" href="#">Society Guidelines</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" data-path="code-of-conduct" href="#">Code of Conduct</a><a class="inline-flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" data-path="rss-feed" href="#"><span class="material-symbols-outlined text-[16px]">rss_feed</span><span>RSS Dispatches</span></a></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm"><p class="font-caption text-caption text-on-surface-variant">© 2024 Campus Connect Collegiate Publishing Guild. All university rights reserved.</p><p class="font-caption text-caption text-tertiary">Archival cream edition · Printed for scholar community</p></div></div></footer></body></html>

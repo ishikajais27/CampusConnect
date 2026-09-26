@@ -5,8 +5,8 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Campus Connect',
-  description: 'Find and register for events happening on campus.',
+  title: 'Campus Connect — Collegiate Gazette & Assemblages',
+  description: 'Curated lectures, creative salons, research symposia, and athletic fixtures across collegiate societies and research foundations.',
 }
 
 export default function RootLayout({
@@ -19,7 +19,11 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <Navbar />
-          <main style={{ minHeight: '70vh' }}>{children}</main>
+          <main className="w-full pt-20 bg-surface min-h-[calc(100vh-220px)]">
+            <div className="flex flex-col w-full">
+              {children}
+            </div>
+          </main>
           <Footer />
         </AuthProvider>
       </body>
