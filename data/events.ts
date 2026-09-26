@@ -6,13 +6,14 @@ export type EventCategory =
   | 'Career'
   | 'Music'
 
-export type EventStatus = 'All' | 'Open' | 'Full' | 'Past'
+export type EventStatus = 'All' | 'Open' | 'Full' | 'Past' | 'Closed' | 'Cancelled'
 
 export interface CampusEvent {
   id: string
   name: string
   description: string
   date: string // ISO 8601 date string, e.g. "2026-10-02T17:00:00"
+  registrationDeadline?: string
   venue: string
   category: EventCategory
   capacity: number
@@ -232,9 +233,88 @@ export function isFullEvent(event: CampusEvent): boolean {
   return event.seatsAvailable <= 0
 }
 
+export function isRegistrationClosed(event: CampusEvent, now = Date.now()): boolean {
+  return (
+    isPastEvent(event) ||
+    Boolean(
+      event.registrationDeadline &&
+        new Date(event.registrationDeadline).getTime() <= now,
+    )
+  )
+}
+
 /** Look up a single event by id, or undefined if it doesn't exist. */
 export function getEventById(id: string): CampusEvent | undefined {
   return events.find((event) => event.id === id)
+}
+
+export interface EventInput {
+  name: string
+  description: string
+  date: string
+  registrationDeadline: string
+  venue: string
+  category: EventCategory
+  capacity: number
+}
+
+export function validateEventInput(input: EventInput, occupiedSeats = 0): string | null {
+  if (!input.name.trim()) return 'Enter an event name.'
+  const eventTime = new Date(input.date).getTime()
+  if (!input.date || Number.isNaN(eventTime) || eventTime <= Date.now()) {
+    return 'Choose a date and time in the future.'
+  }
+  const deadlineTime = new Date(input.registrationDeadline).getTime()
+  if (!input.registrationDeadline || Number.isNaN(deadlineTime) || deadlineTime <= Date.now()) {
+    return 'Choose a registration closing time in the future.'
+  }
+  if (deadlineTime > eventTime) {
+    return 'Registration must close before the event starts.'
+  }
+  if (!input.venue.trim()) return 'Enter a venue.'
+  if (!Number.isInteger(input.capacity) || input.capacity < 1) {
+    return 'Capacity must be a positive whole number.'
+  }
+  if (input.capacity < occupiedSeats) {
+    return `Capacity cannot be less than the ${occupiedSeats} confirmed registrations.`
+  }
+  return null
+}
+
+export function createEvent(input: EventInput, organizerId: string): CampusEvent {
+  const event: CampusEvent = {
+    ...input,
+    id: `evt-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    name: input.name.trim(),
+    description: input.description.trim(),
+    venue: input.venue.trim(),
+    seatsAvailable: input.capacity,
+    organizerId,
+    cancelled: false,
+  }
+  events.unshift(event)
+  return event
+}
+
+export function updateEvent(id: string, input: EventInput): CampusEvent | undefined {
+  const event = getEventById(id)
+  if (!event) return undefined
+  const occupiedSeats = event.capacity - event.seatsAvailable
+  Object.assign(event, {
+    ...input,
+    name: input.name.trim(),
+    description: input.description.trim(),
+    venue: input.venue.trim(),
+    seatsAvailable: input.capacity - occupiedSeats,
+  })
+  return event
+}
+
+export function cancelEvent(id: string): boolean {
+  const event = getEventById(id)
+  if (!event) return false
+  event.cancelled = true
+  return true
 }
 
 /**
@@ -274,6 +354,18 @@ export function filterEventsByStatus(
   status: EventStatus,
 ): CampusEvent[] {
   return eventList.filter((event) => {
+    if (status === 'Cancelled') {
+      return event.cancelled
+    }
+
+    if (event.cancelled) {
+      return false
+    }
+
+    if (status === 'Closed') {
+      return isRegistrationClosed(event)
+    }
+
     if (status === 'Past') {
       return isPastEvent(event)
     }
@@ -283,9 +375,9 @@ export function filterEventsByStatus(
     }
 
     if (status === 'Full') {
-      return isFullEvent(event)
+      return isFullEvent(event) && !isRegistrationClosed(event)
     }
 
-    return status !== 'Open' || !isFullEvent(event)
+    return status !== 'Open' || (!isFullEvent(event) && !isRegistrationClosed(event))
   })
 }

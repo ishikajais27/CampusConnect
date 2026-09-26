@@ -168,6 +168,27 @@ img {
   border-radius: var(--radius);
 }
 
+.organizer-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.organizer-field input,
+.organizer-field select,
+.organizer-field textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 9px 10px;
+  background: var(--paper-raised);
+  color: var(--ink);
+  font: inherit;
+}
+
 /* Event card: styled like a ticket stub, with a perforated tear edge
    between the main details and the seats/status strip. */
 .event-card {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   events,
   EventCategory,
@@ -23,7 +23,7 @@ const CATEGORIES: (EventCategory | "All")[] = [
 ];
 
 //this is for the new filtering option of event status
-const EVENT_STATUSES = ["All", "Open", "Full", "Past"] as const;
+const EVENT_STATUSES = ["All", "Open", "Full", "Past", "Closed", "Cancelled"] as const;
 
 export default function EventsPage() {
   // DONE
@@ -39,6 +39,12 @@ export default function EventsPage() {
   const [category, setCategory] = useState<EventCategory | "All">("All");
   // for the new filter
   const [status, setStatus] = useState<EventStatus>("All");
+  const [, setClock] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setClock(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
   // to store the events after searching
   const searchedEvents = searchEventsByName(events, query);
   // same to store events after category filtering

@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { getEventById, isPastEvent, isFullEvent } from '@/data/events'
+import { getEventById, isPastEvent, isFullEvent, isRegistrationClosed } from '@/data/events'
 import {
   registerStudentForEvent,
   isStudentRegistered,
@@ -41,8 +41,15 @@ export default function EventDetailPage({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [department, setDepartment] = useState('')
   const [showRegistrationForm, setShowRegistrationForm] = useState(false)
+  const [countdownNow, setCountdownNow] = useState<number | null>(null)
 
   const event = getEventById(params.id)
+
+  useEffect(() => {
+    setCountdownNow(Date.now())
+    const timer = window.setInterval(() => setCountdownNow(Date.now()), 1000)
+    return () => window.clearInterval(timer)
+  }, [params.id])
 
   if (!event) {
     return (
@@ -63,19 +70,24 @@ export default function EventDetailPage({
   const past = isPastEvent(event)
   const full = isFullEvent(event)
   const cancelled = event.cancelled
+  const deadlinePassed = Boolean(
+    event.registrationDeadline &&
+      countdownNow !== null &&
+      countdownNow >= new Date(event.registrationDeadline).getTime(),
+  )
   const status = cancelled
     ? 'cancelled'
-    : past
-      ? 'past'
+    : isRegistrationClosed(event, countdownNow ?? 0)
+      ? 'closed'
       : full
         ? 'full'
         : 'open'
 
   const isLoggedInStudent = currentUser?.role === 'student'
   const alreadyRegistered =
-    isLoggedInStudent && isStudentRegistered(currentUser.id, event.id)
+    isLoggedInStudent && !cancelled && isStudentRegistered(currentUser.id, event.id)
   const canRegister =
-    !past && !full && !cancelled && isLoggedInStudent && !alreadyRegistered
+    !past && !full && !cancelled && !deadlinePassed && isLoggedInStudent && !alreadyRegistered
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault()
@@ -173,6 +185,28 @@ export default function EventDetailPage({
           <p style={{ marginTop: 16, fontSize: 15.5 }}>{event.description}</p>
         </div>
 
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {event.registrationDeadline && (
+          <div
+            role="status"
+            style={{
+              padding: '12px 16px',
+              border: '1px solid var(--line)',
+              borderRadius: 'var(--radius)',
+              background: deadlinePassed ? 'var(--rust-bg)' : 'var(--green-bg)',
+              color: deadlinePassed ? '#792411' : '#1c4d34',
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
+            {deadlinePassed
+              ? 'Registration is closed.'
+              : countdownNow === null
+                ? 'Loading registration countdown…'
+                : `Registration closes in ${formatCountdown(new Date(event.registrationDeadline).getTime() - countdownNow)}.`}
+          </div>
+          )}
+
         <aside
           className="card-surface"
           style={{
@@ -186,6 +220,14 @@ export default function EventDetailPage({
           <StatusBadge status={status} />
           <Detail label="Date" value={formatDate(event.date)} />
           <Detail label="Time" value={formatTime(event.date)} />
+          {event.registrationDeadline ? (
+            <Detail
+              label="Registration closes"
+              value={formatDate(event.registrationDeadline) + ' at ' + formatTime(event.registrationDeadline)}
+            />
+          ) : (
+            <Detail label="Registration closes" value="No deadline set" />
+          )}
           <Detail label="Venue" value={event.venue} />
           <Detail
             label="Seats"
@@ -294,6 +336,8 @@ export default function EventDetailPage({
             >
               {cancelled
                 ? 'Event Cancelled'
+                : deadlinePassed
+                  ? 'Registration Closed'
                 : past
                   ? 'Registration Closed'
                   : full
@@ -302,9 +346,19 @@ export default function EventDetailPage({
             </button>
           )}
         </aside>
+        </div>
       </div>
     </section>
   )
+}
+
+function formatCountdown(milliseconds: number) {
+  const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000))
+  const days = Math.floor(totalSeconds / 86_400)
+  const hours = Math.floor((totalSeconds % 86_400) / 3_600)
+  const minutes = Math.floor((totalSeconds % 3_600) / 60)
+  const seconds = totalSeconds % 60
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`
 }
 
 function Detail({ label, value }: { label: string; value: string }) {

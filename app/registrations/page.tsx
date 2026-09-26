@@ -21,7 +21,12 @@ export default function RegistrationsPage() {
     )
   }
 
-  const myRegistrations = getRegistrationsForStudent(currentUser.id)
+  const myRegistrations = getRegistrationsForStudent(currentUser.id).filter(
+    (registration) => {
+      const event = getEventById(registration.eventId)
+      return event && !event.cancelled && registration.status !== 'cancelled'
+    },
+  )
 
   return (
     <section className="shell" style={{ padding: '40px 0 64px' }}>

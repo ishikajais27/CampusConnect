@@ -119,6 +119,16 @@ export function registerStudentForEvent(
     }
   }
 
+  if (
+    event.registrationDeadline &&
+    new Date(event.registrationDeadline).getTime() <= Date.now()
+  ) {
+    return {
+      success: false,
+      message: 'Registration failed: The registration period has closed.',
+    }
+  }
+
   if (isFullEvent(event)) {
     return {
       success: false,
