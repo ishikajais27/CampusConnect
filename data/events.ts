@@ -251,20 +251,13 @@ export function searchEventsByName(
   query: string,
 ): CampusEvent[] {
   const normalizedQuery = query.trim().toLowerCase()
+  if (!normalizedQuery) return eventList
 
   return eventList.filter((event) =>
     event.name.toLowerCase().includes(normalizedQuery),
   )
 }
 
-// DONE
-/**
- * PARTICIPANT TASK (Task 1 — Event Listing):
- *
- * This is a stub. Right now it ignores `category` and returns every
- * event unchanged. You need to filter by exact category match, and
- * make sure it composes with searchEventsByName above.
- */
 export function filterEventsByCategory(
   eventList: CampusEvent[],
   category: EventCategory | 'All',
