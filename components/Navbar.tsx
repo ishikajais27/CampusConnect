@@ -4,11 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from './AuthProvider'
 
-const LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/events', label: 'Events' },
-  { href: '/registrations', label: 'My Registrations' },
-  { href: '/organizer', label: 'Organizer' },
+const NAV_LINKS = [
+  { href: '/events', label: 'Events', path: 'events' },
+  { href: '/registrations', label: 'My Registrations', path: 'my-registrations' },
 ]
 
 export default function Navbar() {
@@ -16,65 +14,97 @@ export default function Navbar() {
   const { currentUser, setCurrentUserId, allUsers } = useAuth()
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-canvas-cream/95 backdrop-blur-md border-b border-divider-hairline shadow-[0_1px_8px_rgba(45,35,30,0.04)]">
-      <div className="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-space-md">
-        <Link href="/" className="flex items-center gap-space-md min-w-[280px]">
-          <img alt="CampusConnect Blossom Sunburst Emblem" className="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMXCxcXS99ttksfheK3gSiJcynfo9FQPTxxYf305l1pUIEWYpuv_0_-bEOJnLtHU7EFc9wjcoTHKskFnFX8a9Fo8ik4aSaqOGOi7TFSGL6ali2hXdkbFsyVHIhS4y3Sozf5mHaPV3o-5cXwiGNMFy7PkANtRbdfyVuH7tfiDJlQTNtnBn_Tr2R2aGf-VQxJsbsASBx9tMPrmvYI4ZoPRr_3q49tmLLmGBjaq9zEA2tKPZEQ7wyZnuTKg" />
-          <div className="flex flex-col">
-            <span className="font-headline-sm text-headline-sm text-primary tracking-tight font-semibold">CampusConnect</span>
-            <span className="font-editorial-italic text-meta-caps italic text-cocoa-sand tracking-normal">Vol. 24 · The Campus Chronicle &amp; Club Hub</span>
-          </div>
-        </Link>
-        <nav className="hidden lg:flex items-center gap-space-sm">
-          {LINKS.filter(
-            (link) => link.href !== '/organizer' || currentUser.role === 'organizer',
-          ).map((link) => {
-            const active =
-              link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-space-md py-space-xs rounded-full font-label-md text-label-md transition-all ${
-                  active
-                    ? 'bg-secondary-container text-primary font-semibold'
-                    : 'text-on-surface-variant hover:bg-tertiary-fixed hover:text-on-surface'
-                }`}
-              >
-                {link.label}
-              </Link>
-            )
-          })}
-        </nav>
-        <div className="flex items-center gap-space-md">
-          <div className="hidden sm:flex items-center bg-surface-tint border border-divider-hairline rounded-full p-1 shadow-[0_2px_4px_rgba(45,35,30,0.03)]">
-            {allUsers.map((user) => {
-              const isActive = user.id === currentUser.id;
-              return (
-                <button
-                  key={user.id}
-                  onClick={() => setCurrentUserId(user.id)}
-                  className={`px-space-sm py-0.5 rounded-full font-label-sm text-label-sm transition-colors ${
-                    isActive
-                      ? 'bg-surface-white text-primary border border-divider-hairline shadow-[0_1px_2px_rgba(45,35,30,0.04)]'
-                      : 'text-cocoa-sand hover:text-primary'
-                  }`}
-                  type="button"
+    <header className="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+      <div className="h-20 max-w-[1320px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-lg">
+        {/* Logo + Nav */}
+        <div className="flex items-center gap-space-xl">
+          <Link href="/" className="flex items-center gap-space-xs group">
+            <span className="material-symbols-outlined text-primary text-[22px] transition-transform duration-200 group-hover:rotate-45">
+              emergency
+            </span>
+            <span className="font-headline-sm text-headline-sm tracking-tight text-on-surface">
+              Campus Connect
+            </span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-space-lg">
+            {NAV_LINKS.filter(link =>
+              link.href !== '/organizer' || currentUser.role === 'organizer'
+            ).map(link => {
+              const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+              return active ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current="page"
+                  className="transition-colors text-primary font-title-md text-title-md border-b-2 border-primary pb-0.5"
                 >
-                  {user.role === 'organizer' ? 'Organizer' : 'Student'} ({user.name.split(' ')[0]})
-                </button>
+                  {link.label}
+                </Link>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
+                >
+                  {link.label}
+                </Link>
               )
             })}
+            <Link
+              href="/events"
+              className={`font-label-md text-label-md ${pathname.startsWith('/events') ? 'hidden' : ''} text-on-surface-variant hover:text-on-surface transition-colors`}
+            >
+              Collegiate Series
+            </Link>
+          </nav>
+        </div>
+
+        {/* Right side controls */}
+        <div className="flex items-center gap-space-md">
+          {currentUser.role === 'organizer' && (
+            <Link
+              href="/organizer"
+              className="hidden sm:inline-flex items-center px-space-md py-space-xs rounded-full bg-secondary text-on-secondary font-label-md text-label-md hover:bg-secondary/90 transition-colors shadow-[0_1px_2px_rgba(35,32,29,0.03)]"
+            >
+              Organizer Portal
+            </Link>
+          )}
+
+          {/* Role Switcher */}
+          <div className="relative inline-flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg shadow-[0_1px_2px_rgba(35,32,29,0.03)]">
+            <span className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mr-space-xs pl-space-xs">
+              Role
+            </span>
+            <select
+              aria-label="Role Switcher"
+              value={currentUser.id}
+              onChange={(e) => setCurrentUserId(e.target.value)}
+              className="appearance-none bg-transparent font-label-md text-label-md text-on-surface pr-6 pl-space-xs py-space-xs focus:outline-none cursor-pointer"
+            >
+              {allUsers.map(user => (
+                <option key={user.id} value={user.id}>
+                  {user.name} ({user.role === 'organizer' ? 'Organizer' : 'Student'})
+                </option>
+              ))}
+            </select>
+            <span className="material-symbols-outlined text-on-surface-variant text-[16px] pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
+              arrow_drop_down
+            </span>
           </div>
-          <button aria-label="Search campus archives" className="w-9 h-9 rounded-full bg-surface-tint border border-divider-hairline flex items-center justify-center text-primary hover:bg-secondary-container hover:text-primary transition-colors" type="button">
-            <span className="material-symbols-outlined text-[18px]">search</span>
+
+          {/* Notifications */}
+          <button
+            aria-label="Notifications"
+            type="button"
+            className="relative p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
+          >
+            <span className="material-symbols-outlined text-[20px]">notifications</span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary" />
           </button>
-          <button aria-label="Notifications" className="relative w-9 h-9 rounded-full bg-surface-tint border border-divider-hairline flex items-center justify-center text-primary hover:bg-secondary-container hover:text-primary transition-colors" type="button">
-            <span className="material-symbols-outlined text-[18px]">notifications</span>
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-apricot ring-2 ring-canvas-cream"></span>
-          </button>
-          <div className="flex items-center gap-space-xs pl-space-xs">
-            <img alt="Profile" className="w-8 h-8 rounded-full object-cover border border-divider-hairline" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj8dhoS4aZWlv7Cxv64rJZtJaPg5CHoX0-t_bFh1P8Do5qUBi6kHlAC2GcVSvDKQdVOkjde8jCLZfMQ-aFubKpSPBfVq44gbG4X-BdUO9YyA7H9Ucncyc64Ix23mFtkgiw8BsCI4wne8WXMiFilnirsy8SJE9dO0BWUTeIaWQX7Axsj3zmAgNmr5_CjUVsRK49LJEpLMExSNSLcL6GeghqPsd-CKjSSpqmyjDELs4fPgxwjT_wVaUP6w" />
+
+          {/* Avatar */}
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+            <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
           </div>
         </div>
       </div>

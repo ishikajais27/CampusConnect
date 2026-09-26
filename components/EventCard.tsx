@@ -1,17 +1,11 @@
 import Link from 'next/link'
 import { CampusEvent, isPastEvent, isFullEvent } from '@/data/events'
-import StatusBadge from './StatusBadge'
 
-function formatDateTime(iso: string) {
-  const d = new Date(iso)
-  return d.toLocaleDateString('en-IN', {
+function formatEventDate(iso: string) {
+  return new Date(iso).toLocaleDateString('en-GB', {
     month: 'short',
-    day: '2-digit',
-    year: 'numeric'
-  }) + ' • ' + d.toLocaleTimeString('en-IN', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
+    day: 'numeric',
+    year: 'numeric',
   })
 }
 
@@ -20,41 +14,74 @@ export default function EventCard({ event }: { event: CampusEvent }) {
   const full = isFullEvent(event)
   const status = event.cancelled
     ? 'cancelled'
-    : past
-      ? 'past'
-      : full
-        ? 'full'
-        : 'open'
+    : past ? 'past' : full ? 'full' : 'open'
+
+  const statusBadge = {
+    open: (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-secondary font-label-md text-label-md">
+        <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+        <span>Open</span>
+      </span>
+    ),
+    full: (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-md text-label-md">
+        <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+        <span>At Capacity</span>
+      </span>
+    ),
+    past: (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-tertiary font-label-md text-label-md">
+        <span className="w-1.5 h-1.5 rounded-full bg-tertiary" />
+        <span>Past</span>
+      </span>
+    ),
+    cancelled: (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-error-container text-error font-label-md text-label-md">
+        <span className="w-1.5 h-1.5 rounded-full bg-error" />
+        <span>Cancelled</span>
+      </span>
+    ),
+  }
 
   return (
-    <Link href={`/events/${event.id}`} className="group cursor-pointer flex flex-col h-full bg-surface-container-lowest border border-outline-variant hover:border-primary transition-colors">
-      <div className="p-4 flex-grow flex flex-col">
-        <div className="flex justify-between items-start mb-2">
-          <span className="px-2 py-1 border border-outline text-label-sm font-label-caps uppercase tracking-wider text-on-surface-variant">
-            {event.category}
+    <Link
+      href={`/events/${event.id}`}
+      className="group relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-200"
+    >
+      <div className="space-y-space-md">
+        <div className="flex items-center justify-between gap-space-xs">
+          <span className="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider bg-surface-container-high px-2 py-0.5 rounded">
+            {event.category.toUpperCase()}
           </span>
-          <StatusBadge status={status} />
+          {statusBadge[status]}
         </div>
-        <h3 className="font-headline-sm text-headline-sm text-on-surface mb-1 group-hover:text-primary transition-colors">
+        <div className="relative py-1">
+          <div className="w-full border-t border-dashed border-outline-variant/60" />
+        </div>
+        <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors leading-tight">
           {event.name}
-        </h3>
-        <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-4 flex-grow">
-          {event.description}
-        </p>
-        <div className="flex flex-col gap-1 text-caption font-caption text-on-surface-variant pt-2 border-t border-surface-dim">
-          <div className="flex items-center gap-1">
-            <span className="material-symbols-outlined text-[16px]">calendar_today</span>
-            <span>{formatDateTime(event.date)}</span>
+        </h2>
+        <div className="space-y-space-xs text-on-surface-variant font-body-sm text-body-sm">
+          <div className="flex items-center gap-space-xs">
+            <span className="material-symbols-outlined text-[18px] text-tertiary shrink-0">calendar_today</span>
+            <span>{formatEventDate(event.date)}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="material-symbols-outlined text-[16px]">location_on</span>
+          <div className="flex items-center gap-space-xs">
+            <span className="material-symbols-outlined text-[18px] text-tertiary shrink-0">location_on</span>
             <span>{event.venue}</span>
           </div>
-          <div className="flex items-center gap-1 mt-1">
-            <span className="material-symbols-outlined text-[16px]">event_seat</span>
-            <span>{event.seatsAvailable}/{event.capacity} seats left</span>
+          <div className="flex items-center gap-space-xs">
+            <span className="material-symbols-outlined text-[18px] text-tertiary shrink-0">chair</span>
+            <span className="text-secondary font-medium">{event.seatsAvailable}</span>
+            <span className="text-tertiary text-caption">/ {event.capacity} seats</span>
           </div>
         </div>
+      </div>
+      <div className="pt-space-lg flex items-center justify-end mt-auto">
+        <span className="inline-flex items-center gap-1 font-label-md text-label-md text-primary group-hover:translate-x-0.5 transition-transform">
+          <span>View Details</span>
+          <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </span>
       </div>
     </Link>
   )
