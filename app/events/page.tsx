@@ -1,7 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { events, EventCategory } from '@/data/events'
+import {
+  events,
+  EventCategory,
+  filterEventsByCategory,
+  isPastEvent,
+  searchEventsByName,
+} from '@/data/events'
 import EventCard from '@/components/EventCard'
 
 const CATEGORIES: (EventCategory | 'All')[] = [
@@ -15,14 +21,19 @@ const CATEGORIES: (EventCategory | 'All')[] = [
 ]
 
 export default function EventsPage() {
-  // PARTICIPANT TASK (Task 1): these two pieces of state exist so the
-  // search box and category dropdown below are usable, but right now
-  // nothing actually reads them — the grid below always renders every
-  // event in `events`. Wire this up to `searchEventsByName` and
-  // `filterEventsByCategory` from data/events.ts, and make the two
-  // compose together.
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<EventCategory | 'All'>('All')
+
+  // Only show upcoming, non-cancelled events.
+  const upcomingEvents = events.filter(
+    (event) => !isPastEvent(event) && !event.cancelled,
+  )
+
+  // Apply search first, then category filtering.
+  // This makes both filters work together.
+  const searchedEvents = searchEventsByName(upcomingEvents, query)
+
+  const filteredEvents = filterEventsByCategory(searchedEvents, category)
 
   return (
     <section className="shell" style={{ padding: '40px 0 64px' }}>
@@ -35,7 +46,12 @@ export default function EventsPage() {
       </div>
 
       <div
-        style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 24 }}
+        style={{
+          display: 'flex',
+          gap: 12,
+          flexWrap: 'wrap',
+          marginBottom: 24,
+        }}
       >
         <input
           type="search"
@@ -51,9 +67,12 @@ export default function EventsPage() {
             background: 'var(--paper-raised)',
           }}
         />
+
         <select
           value={category}
-          onChange={(e) => setCategory(e.target.value as EventCategory | 'All')}
+          onChange={(e) =>
+            setCategory(e.target.value as EventCategory | 'All')
+          }
           style={{
             padding: '10px 14px',
             border: '1.5px solid var(--line)',
@@ -72,15 +91,55 @@ export default function EventsPage() {
 
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: 16,
+          marginBottom: 16,
+          fontSize: 14,
+          color: 'var(--ink-soft)',
         }}
       >
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+        {filteredEvents.length}{' '}
+        {filteredEvents.length === 1 ? 'event' : 'events'} found
       </div>
+
+      {filteredEvents.length > 0 ? (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: 16,
+          }}
+        >
+          {filteredEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      ) : (
+        <div
+          className="card-surface"
+          style={{
+            padding: 40,
+            textAlign: 'center',
+          }}
+        >
+          <h2 style={{ fontSize: 20, marginBottom: 8 }}>
+            No events found
+          </h2>
+
+          <p style={{ color: 'var(--ink-soft)', marginBottom: 18 }}>
+            Try changing your search or selecting a different category.
+          </p>
+
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              setQuery('')
+              setCategory('All')
+            }}
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
     </section>
   )
 }
