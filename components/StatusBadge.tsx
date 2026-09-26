@@ -1,9 +1,10 @@
-type Status = 'open' | 'full' | 'past' | 'cancelled'
+type Status = 'open' | 'full' | 'past' | 'closed' | 'cancelled'
 
 const COPY: Record<Status, string> = {
   open: 'Open',
   full: 'Full',
   past: 'Past',
+  closed: 'Closed',
   cancelled: 'Cancelled',
 }
 
@@ -11,6 +12,7 @@ const COLORS: Record<Status, { bg: string; fg: string }> = {
   open: { bg: 'var(--green-bg)', fg: 'var(--green)' },
   full: { bg: 'var(--rust-bg)', fg: 'var(--rust)' },
   past: { bg: 'var(--slate-bg)', fg: 'var(--ink-soft)' },
+  closed: { bg: 'var(--rust-bg)', fg: 'var(--rust)' },
   cancelled: { bg: 'var(--rust-bg)', fg: 'var(--rust)' },
 }
 

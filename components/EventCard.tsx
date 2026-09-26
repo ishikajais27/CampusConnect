@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CampusEvent, isPastEvent, isFullEvent } from '@/data/events'
+import { CampusEvent, isFullEvent, isRegistrationClosed } from '@/data/events'
 import StatusBadge from './StatusBadge'
 
 function formatDate(iso: string) {
@@ -11,12 +11,11 @@ function formatDate(iso: string) {
 }
 
 export default function EventCard({ event }: { event: CampusEvent }) {
-  const past = isPastEvent(event)
   const full = isFullEvent(event)
   const status = event.cancelled
     ? 'cancelled'
-    : past
-      ? 'past'
+    : isRegistrationClosed(event)
+      ? 'closed'
       : full
         ? 'full'
         : 'open'
