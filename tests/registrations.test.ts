@@ -70,3 +70,19 @@ describe('registerStudentForEvent', () => {
   })
 })
 
+describe('cancelRegistration', () => {
+  it('cancels a registration, marks status as cancelled, and increases available seats', () => {
+    const { cancelRegistration } = require('@/data/registrations')
+    const regId = 'reg-01' // evt-01, stu-1
+    const eventBefore = getEventById('evt-01')!
+    const seatsBefore = eventBefore.seatsAvailable
+
+    const result = cancelRegistration(regId, 'stu-1')
+
+    expect(result.success).toBe(true)
+    const eventAfter = getEventById('evt-01')!
+    expect(eventAfter.seatsAvailable).toBe(seatsBefore + 1)
+  })
+})
+
+

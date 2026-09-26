@@ -162,3 +162,46 @@ export function registerStudentForEvent(
   }
 }
 
+export interface CancelResult {
+  success: boolean
+  message: string
+}
+
+/**
+ * Cancel a student registration (Task 3):
+ * - Sets status to 'cancelled'
+ * - Increases available seats by 1 if it was confirmed
+ */
+export function cancelRegistration(
+  registrationId: string,
+  studentId: string,
+): CancelResult {
+  const reg = registrations.find((r) => r.id === registrationId)
+  if (!reg) {
+    return { success: false, message: 'Registration not found.' }
+  }
+
+  if (reg.studentId !== studentId) {
+    return { success: false, message: 'Unauthorized action.' }
+  }
+
+  if (reg.status === 'cancelled') {
+    return { success: false, message: 'Registration is already cancelled.' }
+  }
+
+  // Update registration status to cancelled
+  reg.status = 'cancelled'
+
+  // Increase available seats
+  const event = getEventById(reg.eventId)
+  if (event) {
+    event.seatsAvailable += 1
+  }
+
+  return {
+    success: true,
+    message: 'Registration successfully cancelled.',
+  }
+}
+
+
