@@ -2,14 +2,20 @@ import Link from 'next/link'
 import { events, isPastEvent } from '@/data/events'
 import EventCard from '@/components/EventCard'
 
+export const dynamic = 'force-dynamic'
+
 export default function HomePage() {
   const upcoming = events
     .filter((e) => !isPastEvent(e) && !e.cancelled)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 4)
 
-  const venueCount = new Set(events.map((e) => e.venue)).size
-  const upcomingCount = events.filter((e) => !isPastEvent(e)).length
+  const venueCount = new Set(
+    events.filter((e) => !e.cancelled).map((e) => e.venue),
+  ).size
+  const upcomingCount = events.filter(
+    (e) => !isPastEvent(e) && !e.cancelled,
+  ).length
 
   return (
     <>

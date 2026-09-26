@@ -1,8 +1,16 @@
 'use client'
 
-import { useState } from 'react'
-import { events, EventCategory } from '@/data/events'
+import { useState, useEffect, useMemo } from 'react'
+import {
+  events as initialEvents,
+  EventCategory,
+  searchEventsByName,
+  filterEventsByCategory,
+  isPastEvent,
+  CampusEvent,
+} from '@/data/events'
 import EventCard from '@/components/EventCard'
+import EmptyState from '@/components/EmptyState'
 
 const CATEGORIES: (EventCategory | 'All')[] = [
   'All',
@@ -15,14 +23,31 @@ const CATEGORIES: (EventCategory | 'All')[] = [
 ]
 
 export default function EventsPage() {
-  // PARTICIPANT TASK (Task 1): these two pieces of state exist so the
-  // search box and category dropdown below are usable, but right now
-  // nothing actually reads them — the grid below always renders every
-  // event in `events`. Wire this up to `searchEventsByName` and
-  // `filterEventsByCategory` from data/events.ts, and make the two
-  // compose together.
+  const [allEvents, setAllEvents] = useState<CampusEvent[]>(initialEvents)
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<EventCategory | 'All'>('All')
+
+  useEffect(() => {
+    fetch('/api/events?includeCancelled=false&includePast=false')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.events) {
+          setAllEvents(data.events)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  // Hide past events and cancelled events from student listing
+  const upcomingEvents = useMemo(() => {
+    return allEvents.filter((event) => !isPastEvent(event) && !event.cancelled)
+  }, [allEvents])
+
+  // Compose category filter and search together
+  const visibleEvents = useMemo(() => {
+    const categoryFiltered = filterEventsByCategory(upcomingEvents, category)
+    return searchEventsByName(categoryFiltered, query)
+  }, [upcomingEvents, category, query])
 
   return (
     <section className="shell" style={{ padding: '40px 0 64px' }}>
@@ -70,17 +95,41 @@ export default function EventsPage() {
         </select>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: 16,
-        }}
-      >
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </div>
+      {visibleEvents.length === 0 ? (
+        <EmptyState
+          title="No events found"
+          description={
+            query || category !== 'All'
+              ? 'No upcoming events matched your search and filter criteria. Try clearing your filters.'
+              : 'There are currently no upcoming events posted.'
+          }
+          action={
+            query || category !== 'All' ? (
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  setQuery('')
+                  setCategory('All')
+                }}
+              >
+                Clear filters
+              </button>
+            ) : undefined
+          }
+        />
+      ) : (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: 16,
+          }}
+        >
+          {visibleEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
