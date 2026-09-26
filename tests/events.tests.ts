@@ -20,3 +20,30 @@ describe('isPastEvent', () => {
     expect(pastTechEvents.map((event) => event.id)).toEqual(['evt-07', 'evt-12'])
   })
 })
+
+describe('sortEvents', () => {
+  it('sorts events by date in ascending order (soonest first)', () => {
+    const { sortEvents } = require('@/data/events')
+    const sorted = sortEvents(events, 'date-asc')
+    expect(new Date(sorted[0].date).getTime()).toBeLessThanOrEqual(
+      new Date(sorted[1].date).getTime(),
+    )
+  })
+
+  it('sorts events by date in descending order (latest first)', () => {
+    const { sortEvents } = require('@/data/events')
+    const sorted = sortEvents(events, 'date-desc')
+    expect(new Date(sorted[0].date).getTime()).toBeGreaterThanOrEqual(
+      new Date(sorted[1].date).getTime(),
+    )
+  })
+
+  it('sorts events by registration popularity in descending order', () => {
+    const { sortEvents } = require('@/data/events')
+    const sorted = sortEvents(events, 'popularity-desc')
+    const bookedFirst = sorted[0].capacity - sorted[0].seatsAvailable
+    const bookedSecond = sorted[1].capacity - sorted[1].seatsAvailable
+    expect(bookedFirst).toBeGreaterThanOrEqual(bookedSecond)
+  })
+})
+

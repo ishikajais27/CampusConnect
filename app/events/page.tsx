@@ -5,9 +5,11 @@ import {
   events,
   EventCategory,
   EventStatus,
+  EventSortOption,
   filterEventsByCategory,
   filterEventsByStatus,
   searchEventsByName,
+  sortEvents,
 } from "@/data/events";
 import EventCard from "@/components/EventCard";
 import EmptyState from "@/components/EmptyState";
@@ -22,36 +24,31 @@ const CATEGORIES: (EventCategory | "All")[] = [
   "Music",
 ];
 
-//this is for the new filtering option of event status
 const EVENT_STATUSES = ["All", "Open", "Full", "Past", "Closed", "Cancelled"] as const;
 
+const SORT_OPTIONS: { label: string; value: EventSortOption }[] = [
+  { label: "Date: Soonest first", value: "date-asc" },
+  { label: "Date: Latest first", value: "date-desc" },
+  { label: "Popularity: Most booked", value: "popularity-desc" },
+  { label: "Popularity: Least booked", value: "popularity-asc" },
+];
+
 export default function EventsPage() {
-  // DONE
-
-  // PARTICIPANT TASK (Task 1): these two pieces of state exist so the
-  // search box and category dropdown below are usable, but right now
-  // nothing actually reads them — the grid below always renders every
-  // event in `events`. Wire this up to `searchEventsByName` and
-  // `filterEventsByCategory` from data/events.ts, and make the two
-  // compose together.
-
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<EventCategory | "All">("All");
-  // for the new filter
   const [status, setStatus] = useState<EventStatus>("All");
+  const [sortBy, setSortBy] = useState<EventSortOption>("date-asc");
   const [, setClock] = useState(0);
 
   useEffect(() => {
     const timer = window.setInterval(() => setClock(Date.now()), 1000);
     return () => window.clearInterval(timer);
   }, []);
-  // to store the events after searching
-  const searchedEvents = searchEventsByName(events, query);
-  // same to store events after category filtering
-  const categoryEvents = filterEventsByCategory(searchedEvents, category);
-  // this is for storing events after doing both filters better would be a single direct pass but its too late for me now
 
+  const searchedEvents = searchEventsByName(events, query);
+  const categoryEvents = filterEventsByCategory(searchedEvents, category);
   const matchingEvents = filterEventsByStatus(categoryEvents, status);
+  const sortedEvents = sortEvents(matchingEvents, sortBy);
 
   return (
     <section className="shell" style={{ padding: "40px 0 64px" }}>
@@ -98,7 +95,6 @@ export default function EventsPage() {
           ))}
         </select>
 
-        {/* the new cateogry section */}
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as EventStatus)}
@@ -116,6 +112,26 @@ export default function EventsPage() {
             </option>
           ))}
         </select>
+
+        {/* Sort selector for Date & Popularity */}
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as EventSortOption)}
+          style={{
+            padding: "10px 14px",
+            border: "1.5px solid var(--line)",
+            borderRadius: "var(--radius)",
+            fontSize: 14.5,
+            background: "var(--paper-raised)",
+            fontWeight: 500,
+          }}
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div
@@ -125,9 +141,8 @@ export default function EventsPage() {
           gap: 16,
         }}
       >
-        {/* again its too late to optimize this */}
-        {matchingEvents.length > 0 ? (
-          matchingEvents.map((event) => (
+        {sortedEvents.length > 0 ? (
+          sortedEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))
         ) : (
@@ -140,3 +155,4 @@ export default function EventsPage() {
     </section>
   );
 }
+

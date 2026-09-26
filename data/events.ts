@@ -381,3 +381,44 @@ export function filterEventsByStatus(
     return status !== 'Open' || (!isFullEvent(event) && !isRegistrationClosed(event))
   })
 }
+
+export type EventSortOption =
+  | 'date-asc'
+  | 'date-desc'
+  | 'popularity-desc'
+  | 'popularity-asc'
+
+/**
+ * Sort events by date or popularity:
+ * - date-asc: Soonest date first (chronological)
+ * - date-desc: Latest date first (reverse chronological)
+ * - popularity-desc: Highest number of booked seats first
+ * - popularity-asc: Lowest number of booked seats first
+ */
+export function sortEvents(
+  eventList: CampusEvent[],
+  sortBy: EventSortOption,
+): CampusEvent[] {
+  const sorted = [...eventList]
+
+  return sorted.sort((a, b) => {
+    if (sortBy === 'date-asc') {
+      return new Date(a.date).getTime() - new Date(b.date).getTime()
+    }
+    if (sortBy === 'date-desc') {
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    }
+    if (sortBy === 'popularity-desc') {
+      const bookedA = a.capacity - a.seatsAvailable
+      const bookedB = b.capacity - b.seatsAvailable
+      return bookedB - bookedA
+    }
+    if (sortBy === 'popularity-asc') {
+      const bookedA = a.capacity - a.seatsAvailable
+      const bookedB = b.capacity - b.seatsAvailable
+      return bookedA - bookedB
+    }
+    return 0
+  })
+}
+

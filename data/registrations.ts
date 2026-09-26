@@ -153,7 +153,7 @@ export function registerStudentForEvent(
   }
 
   registrations.push(newRegistration)
-  event.seatsAvailable -= 1
+  event.seatsAvailable = Math.max(0, event.seatsAvailable - 1)
 
   return {
     success: true,
@@ -192,10 +192,10 @@ export function cancelRegistration(
   // Update registration status to cancelled
   reg.status = 'cancelled'
 
-  // Increase available seats
+  // Increase available seats safely
   const event = getEventById(reg.eventId)
   if (event) {
-    event.seatsAvailable += 1
+    event.seatsAvailable = Math.min(event.capacity, event.seatsAvailable + 1)
   }
 
   return {
