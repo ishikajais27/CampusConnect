@@ -6,6 +6,8 @@ export type EventCategory =
   | 'Career'
   | 'Music'
 
+export type EventStatus = 'All' | 'Open' | 'Full' | 'Past'
+
 export interface CampusEvent {
   id: string
   name: string
@@ -248,15 +250,42 @@ export function searchEventsByName(
   eventList: CampusEvent[],
   query: string,
 ): CampusEvent[] {
-  if (!query || !query.trim()) return eventList
-  const q = query.toLowerCase().trim()
-  return eventList.filter((event) => event.name.toLowerCase().includes(q))
+  const normalizedQuery = query.trim().toLowerCase()
+  if (!normalizedQuery) return eventList
+
+  return eventList.filter((event) =>
+    event.name.toLowerCase().includes(normalizedQuery),
+  )
 }
 
 export function filterEventsByCategory(
   eventList: CampusEvent[],
   category: EventCategory | 'All',
 ): CampusEvent[] {
-  if (category === 'All') return eventList
+  if (category === 'All') {
+    return eventList
+  }
+
   return eventList.filter((event) => event.category === category)
+}
+
+export function filterEventsByStatus(
+  eventList: CampusEvent[],
+  status: EventStatus,
+): CampusEvent[] {
+  return eventList.filter((event) => {
+    if (status === 'Past') {
+      return isPastEvent(event)
+    }
+
+    if (isPastEvent(event)) {
+      return false
+    }
+
+    if (status === 'Full') {
+      return isFullEvent(event)
+    }
+
+    return status !== 'Open' || !isFullEvent(event)
+  })
 }
