@@ -248,8 +248,9 @@ export function searchEventsByName(
   eventList: CampusEvent[],
   query: string,
 ): CampusEvent[] {
-  // TODO(participant): implement case-insensitive partial name search.
-  return eventList
+  if (!query) return eventList;
+  const lowerQuery = query.toLowerCase();
+  return eventList.filter(e => e.name.toLowerCase().includes(lowerQuery));
 }
 
 /**
@@ -263,6 +264,6 @@ export function filterEventsByCategory(
   eventList: CampusEvent[],
   category: EventCategory | 'All',
 ): CampusEvent[] {
-  // TODO(participant): implement category filtering.
-  return eventList
+  if (category === 'All') return eventList;
+  return eventList.filter(e => e.category === category);
 }

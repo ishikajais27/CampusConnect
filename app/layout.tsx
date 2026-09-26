@@ -16,10 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-canvas-cream font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-primary">
         <AuthProvider>
           <Navbar />
-          <main style={{ minHeight: '70vh' }}>{children}</main>
+          <main className="w-full pt-20 min-h-screen">
+            <div className="flex flex-col w-full">
+              {children}
+            </div>
+          </main>
           <Footer />
         </AuthProvider>
       </body>

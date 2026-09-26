@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { events, EventCategory } from '@/data/events'
+import { events, EventCategory, searchEventsByName, filterEventsByCategory } from '@/data/events'
 import EventCard from '@/components/EventCard'
 
 const CATEGORIES: (EventCategory | 'All')[] = [
@@ -15,72 +15,63 @@ const CATEGORIES: (EventCategory | 'All')[] = [
 ]
 
 export default function EventsPage() {
-  // PARTICIPANT TASK (Task 1): these two pieces of state exist so the
-  // search box and category dropdown below are usable, but right now
-  // nothing actually reads them — the grid below always renders every
-  // event in `events`. Wire this up to `searchEventsByName` and
-  // `filterEventsByCategory` from data/events.ts, and make the two
-  // compose together.
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<EventCategory | 'All'>('All')
 
-  return (
-    <section className="shell" style={{ padding: '40px 0 64px' }}>
-      <div style={{ marginBottom: 28 }}>
-        <span className="eyebrow-tag">the board</span>
-        <h1 style={{ fontSize: 30, marginTop: 10 }}>All events</h1>
-        <p style={{ marginTop: 8 }}>
-          Everything posted by clubs and departments this semester.
-        </p>
-      </div>
+  let displayEvents = searchEventsByName(events, query)
+  displayEvents = filterEventsByCategory(displayEvents, category)
 
-      <div
-        style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 24 }}
-      >
-        <input
-          type="search"
-          placeholder="Search events by name…"
+  return (
+    <div className="max-w-7xl mx-auto px-gutter py-space-xl flex flex-col gap-space-xl px-4 lg:px-8">
+      {/* Header & Controls */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
+        <div className="max-w-2xl">
+          <h1 className="font-display text-display text-primary mb-space-sm">Campus Assemblages</h1>
+          <p className="font-body-lg text-body-lg text-on-surface-variant">Discover gatherings, workshops, and spectacles curated by your campus societies.</p>
+        </div>
+        
+        {/* Filters */}
+        <div className="flex items-center gap-space-sm overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+          {CATEGORIES.map((c) => {
+            const isActive = category === c
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setCategory(c)}
+                className={`flex-shrink-0 px-space-md py-space-sm rounded-full font-label-md text-label-md border transition-colors ${
+                  isActive
+                    ? 'border-primary bg-primary text-on-primary'
+                    : 'border-outline text-on-surface hover:bg-surface-variant'
+                }`}
+              >
+                {c === 'All' ? 'All Events' : c}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+      
+      {/* Search */}
+      <div className="relative max-w-xl mb-4">
+        <span className="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+        <input 
+          type="text" 
+          placeholder="Search the archives..." 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{
-            flex: '1 1 240px',
-            padding: '10px 14px',
-            border: '1.5px solid var(--line)',
-            borderRadius: 'var(--radius)',
-            fontSize: 14.5,
-            background: 'var(--paper-raised)',
-          }}
+          className="w-full bg-surface-container-lowest border border-outline rounded-full py-space-sm pl-12 pr-space-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" 
         />
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value as EventCategory | 'All')}
-          style={{
-            padding: '10px 14px',
-            border: '1.5px solid var(--line)',
-            borderRadius: 'var(--radius)',
-            fontSize: 14.5,
-            background: 'var(--paper-raised)',
-          }}
-        >
-          {CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c === 'All' ? 'All categories' : c}
-            </option>
-          ))}
-        </select>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: 16,
-        }}
-      >
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {displayEvents.map((event) => (
+          <div key={event.id} className="col-span-1">
+            <EventCard event={event} />
+          </div>
         ))}
       </div>
-    </section>
+    </div>
   )
 }
