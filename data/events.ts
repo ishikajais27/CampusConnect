@@ -22,7 +22,7 @@ export interface CampusEvent {
 // "Today" for the seed data. Events before this are considered past.
 export const TODAY = new Date('2026-09-16T09:00:00')
 
-export const events: CampusEvent[] = [
+const initialEvents: CampusEvent[] = [
   {
     id: 'evt-01',
     name: 'Hack the Campus 2026',
@@ -220,6 +220,15 @@ export const events: CampusEvent[] = [
   },
 ]
 
+const globalForEvents = globalThis as unknown as {
+  campusEvents?: CampusEvent[]
+}
+
+export const events: CampusEvent[] =
+  globalForEvents.campusEvents ?? initialEvents
+
+globalForEvents.campusEvents = events
+
 /** True when the event's date has already passed relative to TODAY. */
 export function isPastEvent(event: CampusEvent): boolean {
   return new Date(event.date).getTime() < TODAY.getTime()
@@ -248,21 +257,158 @@ export function searchEventsByName(
   eventList: CampusEvent[],
   query: string,
 ): CampusEvent[] {
-  // TODO(participant): implement case-insensitive partial name search.
-  return eventList
+  const trimmed = query.trim().toLowerCase()
+  if (!trimmed) return eventList
+  return eventList.filter((event) =>
+    event.name.toLowerCase().includes(trimmed),
+  )
 }
 
-/**
- * PARTICIPANT TASK (Task 1 — Event Listing):
- *
- * This is a stub. Right now it ignores `category` and returns every
- * event unchanged. You need to filter by exact category match, and
- * make sure it composes with searchEventsByName above.
- */
 export function filterEventsByCategory(
   eventList: CampusEvent[],
   category: EventCategory | 'All',
 ): CampusEvent[] {
-  // TODO(participant): implement category filtering.
-  return eventList
+  if (category === 'All') return eventList
+  return eventList.filter((event) => event.category === category)
+}
+
+export interface CreateEventInput {
+  name: string
+  description?: string
+  date: string
+  venue: string
+  category: EventCategory
+  capacity: number
+  organizerId: string
+}
+
+export interface UpdateEventInput {
+  name?: string
+  description?: string
+  date?: string
+  venue?: string
+  category?: EventCategory
+  capacity?: number
+}
+
+export function createEvent(data: CreateEventInput): {
+  success: boolean
+  event?: CampusEvent
+  error?: string
+} {
+  if (!data.name || !data.name.trim()) {
+    return { success: false, error: 'Event name is required.' }
+  }
+  if (!data.venue || !data.venue.trim()) {
+    return { success: false, error: 'Event venue is required.' }
+  }
+  if (!data.date) {
+    return { success: false, error: 'Event date is required.' }
+  }
+  const eventDate = new Date(data.date)
+  if (isNaN(eventDate.getTime())) {
+    return { success: false, error: 'Invalid event date.' }
+  }
+  if (eventDate.getTime() < TODAY.getTime()) {
+    return { success: false, error: 'Event date must be in the future.' }
+  }
+  const capacity = Number(data.capacity)
+  if (!capacity || capacity <= 0 || !Number.isInteger(capacity)) {
+    return { success: false, error: 'Capacity must be a positive integer.' }
+  }
+
+  const id = `evt-${Date.now().toString().slice(-4)}-${Math.floor(Math.random() * 1000)}`
+  const newEvent: CampusEvent = {
+    id,
+    name: data.name.trim(),
+    description: (data.description || '').trim(),
+    date: data.date,
+    venue: data.venue.trim(),
+    category: data.category,
+    capacity,
+    seatsAvailable: capacity,
+    organizerId: data.organizerId,
+    cancelled: false,
+  }
+
+  events.push(newEvent)
+  return { success: true, event: newEvent }
+}
+
+export function updateEvent(
+  id: string,
+  updates: UpdateEventInput,
+): {
+  success: boolean
+  event?: CampusEvent
+  error?: string
+} {
+  const event = events.find((e) => e.id === id)
+  if (!event) {
+    return { success: false, error: 'Event not found.' }
+  }
+
+  if (updates.name !== undefined) {
+    if (!updates.name.trim()) {
+      return { success: false, error: 'Event name cannot be empty.' }
+    }
+    event.name = updates.name.trim()
+  }
+
+  if (updates.venue !== undefined) {
+    if (!updates.venue.trim()) {
+      return { success: false, error: 'Venue cannot be empty.' }
+    }
+    event.venue = updates.venue.trim()
+  }
+
+  if (updates.date !== undefined) {
+    const eventDate = new Date(updates.date)
+    if (isNaN(eventDate.getTime())) {
+      return { success: false, error: 'Invalid event date.' }
+    }
+    if (eventDate.getTime() < TODAY.getTime()) {
+      return { success: false, error: 'Event date must be in the future.' }
+    }
+    event.date = updates.date
+  }
+
+  if (updates.capacity !== undefined) {
+    const newCap = Number(updates.capacity)
+    if (!newCap || newCap <= 0 || !Number.isInteger(newCap)) {
+      return { success: false, error: 'Capacity must be a positive integer.' }
+    }
+    const seatsTaken = event.capacity - event.seatsAvailable
+    if (newCap < seatsTaken) {
+      return {
+        success: false,
+        error: `Capacity cannot be lower than existing registrations (${seatsTaken}).`,
+      }
+    }
+    event.seatsAvailable = newCap - seatsTaken
+    event.capacity = newCap
+  }
+
+  if (updates.category !== undefined) {
+    event.category = updates.category
+  }
+
+  if (updates.description !== undefined) {
+    event.description = updates.description.trim()
+  }
+
+  return { success: true, event }
+}
+
+export function cancelEvent(id: string): {
+  success: boolean
+  event?: CampusEvent
+  error?: string
+} {
+  const event = events.find((e) => e.id === id)
+  if (!event) {
+    return { success: false, error: 'Event not found.' }
+  }
+  event.cancelled = true
+  return { success: true, event }
 }
