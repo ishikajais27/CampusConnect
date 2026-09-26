@@ -1,5 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 import { getEventById, isPastEvent, isFullEvent } from '@/data/events'
+import { registerStudent } from '@/data/registrations'
+import { useAuth } from '@/components/AuthProvider'
 import StatusBadge from '@/components/StatusBadge'
 import EmptyState from '@/components/EmptyState'
 
@@ -24,6 +29,13 @@ export default function EventDetailPage({
 }: {
   params: { id: string }
 }) {
+  const { currentUser } = useAuth()
+
+  const [message, setMessage] = useState('')
+  const [messageType, setMessageType] = useState<
+    'success' | 'error' | ''
+  >('')
+
   const event = getEventById(params.id)
 
   if (!event) {
@@ -44,6 +56,7 @@ export default function EventDetailPage({
 
   const past = isPastEvent(event)
   const full = isFullEvent(event)
+
   const status = event.cancelled
     ? 'cancelled'
     : past
@@ -51,13 +64,38 @@ export default function EventDetailPage({
       : full
         ? 'full'
         : 'open'
-  const canRegister = !past && !full && !event.cancelled
+
+  const canRegister =
+    !past &&
+    !full &&
+    !event.cancelled &&
+    currentUser.role === 'student'
+
+  function handleRegister() {
+    setMessage('')
+    setMessageType('')
+
+    if (currentUser.role !== 'student') {
+      setMessage('Only students can register for events.')
+      setMessageType('error')
+      return
+    }
+
+    const result = registerStudent(event.id, currentUser.id)
+
+    setMessage(result.message)
+    setMessageType(result.success ? 'success' : 'error')
+  }
 
   return (
     <section className="shell" style={{ padding: '40px 0 64px' }}>
       <Link
         href="/events"
-        style={{ fontSize: 13.5, fontWeight: 600, textDecoration: 'none' }}
+        style={{
+          fontSize: 13.5,
+          fontWeight: 600,
+          textDecoration: 'none',
+        }}
       >
         ← All events
       </Link>
@@ -73,8 +111,14 @@ export default function EventDetailPage({
       >
         <div>
           <span className="eyebrow-tag">{event.category}</span>
-          <h1 style={{ fontSize: 32, marginTop: 12 }}>{event.name}</h1>
-          <p style={{ marginTop: 16, fontSize: 15.5 }}>{event.description}</p>
+
+          <h1 style={{ fontSize: 32, marginTop: 12 }}>
+            {event.name}
+          </h1>
+
+          <p style={{ marginTop: 16, fontSize: 15.5 }}>
+            {event.description}
+          </p>
         </div>
 
         <aside
@@ -88,24 +132,32 @@ export default function EventDetailPage({
           }}
         >
           <StatusBadge status={status} />
-          <Detail label="Date" value={formatDate(event.date)} />
-          <Detail label="Time" value={formatTime(event.date)} />
-          <Detail label="Venue" value={event.venue} />
+
+          <Detail
+            label="Date"
+            value={formatDate(event.date)}
+          />
+
+          <Detail
+            label="Time"
+            value={formatTime(event.date)}
+          />
+
+          <Detail
+            label="Venue"
+            value={event.venue}
+          />
+
           <Detail
             label="Seats"
             value={`${event.seatsAvailable} of ${event.capacity} available`}
           />
 
-          {/* PARTICIPANT TASK (Task 2 — Registration): this button is a
-              placeholder. Wire it to a registration form and the
-              POST /api/registrations route, and make sure it respects
-              login state, duplicate registrations, full events, and
-              past/cancelled events. */}
           <button
             className="btn btn-primary"
             disabled={!canRegister}
+            onClick={handleRegister}
             style={{ marginTop: 4 }}
-            title="Registration isn't wired up yet — that's Task 2"
           >
             {canRegister
               ? 'Register'
@@ -113,17 +165,58 @@ export default function EventDetailPage({
                 ? 'Event full'
                 : 'Registration closed'}
           </button>
+
+          {message && (
+            <div
+              style={{
+                padding: '10px 12px',
+                borderRadius: 8,
+                fontSize: 13.5,
+                background:
+                  messageType === 'success'
+                    ? '#ecfdf3'
+                    : '#fef2f2',
+                color:
+                  messageType === 'success'
+                    ? '#166534'
+                    : '#b91c1c',
+              }}
+            >
+              {message}
+            </div>
+          )}
         </aside>
       </div>
     </section>
   )
 }
 
-function Detail({ label, value }: { label: string; value: string }) {
+function Detail({
+  label,
+  value,
+}: {
+  label: string
+  value: string
+}) {
   return (
     <div>
-      <div style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{label}</div>
-      <div style={{ fontSize: 14.5, fontWeight: 500 }}>{value}</div>
+      <div
+        style={{
+          fontSize: 12,
+          color: 'var(--ink-soft)',
+        }}
+      >
+        {label}
+      </div>
+
+      <div
+        style={{
+          fontSize: 14.5,
+          fontWeight: 500,
+        }}
+      >
+        {value}
+      </div>
     </div>
   )
 }
