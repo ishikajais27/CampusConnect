@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { events, isPastEvent } from '@/data/events'
 import EventCard from '@/components/EventCard'

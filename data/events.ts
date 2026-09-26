@@ -248,21 +248,15 @@ export function searchEventsByName(
   eventList: CampusEvent[],
   query: string,
 ): CampusEvent[] {
-  // TODO(participant): implement case-insensitive partial name search.
-  return eventList
+  if (!query || !query.trim()) return eventList
+  const q = query.toLowerCase().trim()
+  return eventList.filter((event) => event.name.toLowerCase().includes(q))
 }
 
-/**
- * PARTICIPANT TASK (Task 1 — Event Listing):
- *
- * This is a stub. Right now it ignores `category` and returns every
- * event unchanged. You need to filter by exact category match, and
- * make sure it composes with searchEventsByName above.
- */
 export function filterEventsByCategory(
   eventList: CampusEvent[],
   category: EventCategory | 'All',
 ): CampusEvent[] {
-  // TODO(participant): implement category filtering.
-  return eventList
+  if (category === 'All') return eventList
+  return eventList.filter((event) => event.category === category)
 }
