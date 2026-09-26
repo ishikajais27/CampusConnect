@@ -1,15 +1,15 @@
 import Link from 'next/link'
-import { events, isPastEvent } from '@/data/events'
+import { events, filterUpcomingEvents } from '@/data/events'
 import EventCard from '@/components/EventCard'
 
 export default function HomePage() {
-  const upcoming = events
-    .filter((e) => !isPastEvent(e) && !e.cancelled)
+  const upcomingEvents = filterUpcomingEvents()
+  const upcoming = [...upcomingEvents]
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 4)
 
   const venueCount = new Set(events.map((e) => e.venue)).size
-  const upcomingCount = events.filter((e) => !isPastEvent(e)).length
+  const upcomingCount = upcomingEvents.length
 
   return (
     <>

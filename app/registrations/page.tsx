@@ -50,7 +50,8 @@ export default function RegistrationsPage() {
         <ul style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {myRegistrations.map((reg) => {
             const event = getEventById(reg.eventId)
-            if (!event) return null
+            // Hide registrations for cancelled events
+            if (!event || event.cancelled) return null
             return (
               <li
                 key={reg.id}

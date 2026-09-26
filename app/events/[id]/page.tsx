@@ -22,11 +22,11 @@ function formatTime(iso: string) {
 export default function EventDetailPage({
   params,
 }: {
-  params: { id: string }
+  params?: { id?: string }
 }) {
-  const event = getEventById(params.id)
+  const event = params?.id ? getEventById(params.id) : undefined
 
-  if (!event) {
+  if (!event || event.cancelled) {
     return (
       <section className="shell" style={{ padding: '56px 0' }}>
         <EmptyState
